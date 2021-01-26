@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BoardAdminComponent } from './component/board-admin/board-admin.component';
 import { BoardModeratorComponent } from './component/board-moderator/board-moderator.component';
@@ -14,6 +14,8 @@ import { ProfileComponent } from './component/profile/profile.component';
 import { RegisterComponent } from './component/register/register.component';
 import { HeaderComponent } from './template/header/header.component';
 import { FooterComponent } from './template/footer/footer.component';
+import { TodoListComponent } from './component/todo-list/todo-list.component';
+import { TodoService } from 'src/app/service/todo.service';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,15 @@ import { FooterComponent } from './template/footer/footer.component';
     ProfileComponent,
     RegisterComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    TodoListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

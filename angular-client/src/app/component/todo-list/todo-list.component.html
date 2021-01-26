@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <form [formGroup]="todoForm" novalidate (ngSubmit)="save()">
+                <div class="row">
+                    <div class="col-10">
+                        <input type="text" class="form-control" formControlName="description" #description>
+                    </div>
+                    <div class="col-2 ml-auto text-right">
+                        <button type="submit" class="btn btn-primary" *ngIf="!selectedTodo">
+                            <span>Create Task</span>
+                        </button>
+
+                        <button type="submit" class="btn btn-primary" *ngIf="selectedTodo">
+                            <span>Update Task</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="w-75">Task</th>
+                            <th class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let todo of todos" (click)="selectTodo(todo)">
+                            <td>{{todo.description}}</td>
+                            <td class="text-right">
+                                <button class="btn btn-primary">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

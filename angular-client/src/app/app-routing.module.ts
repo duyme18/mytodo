@@ -1,3 +1,4 @@
+import { TodoListComponent } from './component/todo-list/todo-list.component';
 import { BoardAdminComponent } from './component/board-admin/board-admin.component';
 import { BoardModeratorComponent } from './component/board-moderator/board-moderator.component';
 import { BoardUserComponent } from './component/board-user/board-user.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', component: TodoListComponent },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 
 
