@@ -14,6 +14,5 @@ public class Todo {
 	@GeneratedValue
 	private Long id;
 	private String description;
-	private Boolean completed;
 
 }
