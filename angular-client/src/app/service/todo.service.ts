@@ -2,7 +2,6 @@ import { Todo } from './../model/todo';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import 'rxjs/add/operator/map';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -31,8 +30,9 @@ export class TodoService {
     return this.httpClient.post<any>(URL, todo, this.httpOptions).pipe(catchError(this.handleError));
   }
 
-  public modifyTodo(todo: Todo) {
-    const URL = `${this.apiURL}/` + todo.id;
+  // tslint:disable-next-line:typedef
+  public modifyTodo(todoId: number, todo: Todo) {
+    const URL = `${this.apiURL}/` + todoId;
     return this.httpClient.put<any>(URL, todo, this.httpOptions).pipe(catchError(this.handleError));
   }
 

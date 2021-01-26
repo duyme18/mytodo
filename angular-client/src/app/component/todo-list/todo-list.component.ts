@@ -19,6 +19,7 @@ export class TodoListComponent implements OnInit {
   isSubmitted = false;
   selectedTodo?: Todo;
   public todoForm = new FormGroup({
+    id: new FormControl(''),
     description: new FormControl('')
   });
 
@@ -29,9 +30,13 @@ export class TodoListComponent implements OnInit {
   @ViewChild("description") descriptionInput?: ElementRef;
 
   ngOnInit() {
+    console.log(this.todoId)
+    this.getTodo();
+  }
+  
+  getTodo(){
     this.todoService.getTodo().subscribe((data) => {
       this.todos = data;
-      console.log(this.todos);
     });
   }
 
@@ -46,17 +51,17 @@ export class TodoListComponent implements OnInit {
   }
 
   public save() {
-    this.isSubmitted = true;
-    if (this.todoForm.invalid) {
-      return;
-    }
+
     if (this.selectedTodo) {
-      this.todoService.modifyTodo(this.createNewTodo()).subscribe((data) => {
+      this.todoService.modifyTodo(this.selectedTodo.id, this.createNewTodo()).subscribe((data) => {
+        console.log(this.selectedTodo?.id)
+        this.getTodo();
         this.router.navigate(['']);
         this.todoForm.reset();
       });
     } else {
       this.todoService.addTodo(this.createNewTodo()).subscribe((data) => {
+        this.getTodo();
         this.router.navigate(['']);
         this.todoForm.reset();
       });
@@ -68,6 +73,7 @@ export class TodoListComponent implements OnInit {
     this.selectedTodo.id = todo.id;
     console.log(this.selectedTodo.id)
     console.log(todo.id)
+    this.todoForm.controls['id'].setValue(todo.id);
     this.todoForm.controls['description'].setValue(todo.description);
     this.descriptionInput?.nativeElement.focus();
   }
