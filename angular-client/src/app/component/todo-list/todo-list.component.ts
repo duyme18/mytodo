@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Todo } from './../../model/todo';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from 'src/app/service/todo.service';
 
 @Component({
@@ -14,13 +14,15 @@ export class TodoListComponent implements OnInit {
   constructor(private todoService: TodoService,
     private router: Router) {
   }
+
   todoId = 0;
   todos: Todo[] = [];
   isSubmitted = false;
   selectedTodo?: Todo;
+
   public todoForm = new FormGroup({
     id: new FormControl(''),
-    description: new FormControl('')
+    description: new FormControl('', [Validators.required])
   });
 
   get f() {
@@ -30,11 +32,10 @@ export class TodoListComponent implements OnInit {
   @ViewChild("description") descriptionInput?: ElementRef;
 
   ngOnInit() {
-    console.log(this.todoId)
     this.getTodo();
   }
-  
-  getTodo(){
+
+  getTodo() {
     this.todoService.getTodo().subscribe((data) => {
       this.todos = data;
     });
@@ -51,13 +52,12 @@ export class TodoListComponent implements OnInit {
   }
 
   public save() {
-
     if (this.selectedTodo) {
       this.todoService.modifyTodo(this.selectedTodo.id, this.createNewTodo()).subscribe((data) => {
-        console.log(this.selectedTodo?.id)
         this.getTodo();
         this.router.navigate(['']);
         this.todoForm.reset();
+        window.location.reload();
       });
     } else {
       this.todoService.addTodo(this.createNewTodo()).subscribe((data) => {
@@ -68,11 +68,16 @@ export class TodoListComponent implements OnInit {
     }
   }
 
+  public deleteTodo(todoId: any) {
+    this.todoService.deleteTodo(todoId).subscribe((data) => {
+      this.getTodo();
+      this.descriptionInput?.nativeElement.focus();
+    });
+  }
+
   selectTodo(todo: Todo) {
     this.selectedTodo = todo;
     this.selectedTodo.id = todo.id;
-    console.log(this.selectedTodo.id)
-    console.log(todo.id)
     this.todoForm.controls['id'].setValue(todo.id);
     this.todoForm.controls['description'].setValue(todo.description);
     this.descriptionInput?.nativeElement.focus();
