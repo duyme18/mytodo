@@ -16,11 +16,12 @@ export class TodoService {
     }),
   }
 
-  private apiURL = 'http://localhost:8080/api/auth/todo';
+  private apiURL = 'http://localhost:8080/api/auth/todos';
 
   constructor(private httpClient: HttpClient) { }
 
-  getTodo() {
+
+  getTodos() {
     const URL = `${this.apiURL}`;
     return this.httpClient.get<any>(URL, this.httpOptions).pipe(catchError(this.handleError));
   }
@@ -30,9 +31,8 @@ export class TodoService {
     return this.httpClient.post<any>(URL, todo, this.httpOptions).pipe(catchError(this.handleError));
   }
 
-  // tslint:disable-next-line:typedef
-  public modifyTodo(todoId: number, todo: Todo) {
-    const URL = `${this.apiURL}/` + todoId;
+  public modifyTodo(todo: Todo) {
+    const URL = `${this.apiURL}/` + todo.id;
     return this.httpClient.put<any>(URL, todo, this.httpOptions).pipe(catchError(this.handleError));
   }
 

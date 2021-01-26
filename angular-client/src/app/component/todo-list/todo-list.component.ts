@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Todo } from './../../model/todo';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { TodoService } from 'src/app/service/todo.service';
 
 @Component({
@@ -15,10 +15,10 @@ export class TodoListComponent implements OnInit {
     private router: Router) {
   }
 
-  todoId = 0;
   todos: Todo[] = [];
-  isSubmitted = false;
-  selectedTodo?: Todo;
+  editing: boolean = false;
+  editingTodo: Todo = new Todo();
+  newTodo: Todo = new Todo();
 
   public todoForm = new FormGroup({
     id: new FormControl(''),
@@ -32,55 +32,58 @@ export class TodoListComponent implements OnInit {
   @ViewChild("description") descriptionInput?: ElementRef;
 
   ngOnInit() {
-    this.getTodo();
+    this.getTodos();
   }
 
-  getTodo() {
-    this.todoService.getTodo().subscribe((data) => {
+  getTodos() {
+    this.todoService.getTodos().subscribe((data) => {
       this.todos = data;
     });
   }
 
-  createNewTodo() {
-    const newTodo: any = {};
-    for (const controlName in this.todoForm.controls) {
-      if (controlName) {
-        newTodo[controlName] = this.todoForm.controls[controlName].value;
-      }
-    }
-    return newTodo as Todo;
-  }
-
-  public save() {
-    if (this.selectedTodo) {
-      this.todoService.modifyTodo(this.selectedTodo.id, this.createNewTodo()).subscribe((data) => {
-        this.getTodo();
-        this.router.navigate(['']);
-        this.todoForm.reset();
-        window.location.reload();
+  createTodo(todoForm: NgForm): void {
+    this.todoService.addTodo(this.newTodo)
+      .subscribe(createTodo => {
+        todoForm.reset();
+        this.newTodo = new Todo();
+        this.todos.unshift(createTodo)
       });
-    } else {
-      this.todoService.addTodo(this.createNewTodo()).subscribe((data) => {
-        this.getTodo();
-        this.router.navigate(['']);
-        this.todoForm.reset();
+  }
+
+  deleteTodo(id: any): void {
+    this.todoService.deleteTodo(id)
+      .subscribe(() => {
+        this.todos = this.todos.filter(todo => todo?.id != id);
       });
-    }
   }
 
-  public deleteTodo(todoId: any) {
-    this.todoService.deleteTodo(todoId).subscribe((data) => {
-      this.getTodo();
-      this.descriptionInput?.nativeElement.focus();
-    });
+  updateTodo(todoData: Todo): void {
+    console.log(todoData);
+    this.todoService.modifyTodo(todoData)
+      .subscribe(updatedTodo => {
+        const existingTodo = this.todos.find(todo => todo.id === updatedTodo.id);
+        Object.assign(existingTodo, updatedTodo);
+        this.clearEditing();
+      });
   }
 
-  selectTodo(todo: Todo) {
-    this.selectedTodo = todo;
-    this.selectedTodo.id = todo.id;
-    this.todoForm.controls['id'].setValue(todo.id);
-    this.todoForm.controls['description'].setValue(todo.description);
-    this.descriptionInput?.nativeElement.focus();
+  toggleCompleted(todoData: Todo): void {
+    todoData.completed = !todoData.completed;
+    this.todoService.modifyTodo(todoData)
+      .subscribe(updatedTodo => {
+        const existingTodo = this.todos.find(todo => todo.id === updatedTodo.id);
+        Object.assign(existingTodo, updatedTodo);
+      });
+  }
+
+  editTodo(todoData: Todo): void {
+    this.editing = true;
+    Object.assign(this.editingTodo, todoData);
+  }
+
+  clearEditing(): void {
+    this.editingTodo = new Todo();
+    this.editing = false;
   }
 
 }
