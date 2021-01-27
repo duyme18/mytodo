@@ -5,8 +5,14 @@ body {
     line-height: 1.58;
     background: #d53369;
     background: -webkit-linear-gradient(to left, #cbad6d, #d53369);
-    background: linear-gradient(to left, #cbad6d, #16538b);
+    background: linear-gradient(to left, #ffd06a, #56e6ff);
     color: #333;
+}
+
+.mid-center {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 h1 {
@@ -23,7 +29,7 @@ i {
 }
 
 input {
-    border: 1px solid #E8E8E8;
+    border: 1px solid #e8e8e8;
 }
 
 .page-title {
@@ -37,14 +43,14 @@ input {
     margin-top: 60px;
     background-color: #fff;
     padding: 15px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
 }
 
 .form-control {
     font-size: 16px;
     padding-left: 15px;
     outline: none;
-    border: 1px solid #E8E8E8;
+    border: 1px solid #e8e8e8;
 }
 
 .form-control:focus {
@@ -83,7 +89,7 @@ input {
 .todo-content ul li {
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #E8E8E8;
+    border-bottom: 1px solid #e8e8e8;
 }
 
 .todo-content ul li span {
@@ -148,11 +154,11 @@ input {
 }
 
 .toggle-completed-checkbox:before {
-    content: 'check_box_outline_blank';
+    content: "check_box_outline_blank";
 }
 
 li.completed .toggle-completed-checkbox:before {
-    content: 'check_box';
+    content: "check_box";
 }
 
 li.completed .todo-title {

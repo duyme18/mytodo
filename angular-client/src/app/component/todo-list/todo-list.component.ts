@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../../service/token-storage.service';
 import { Router } from '@angular/router';
 import { Todo } from './../../model/todo';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -11,10 +12,17 @@ import { TodoService } from 'src/app/service/todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  constructor(private todoService: TodoService,
+  constructor(
+    private tokenStorageService: TokenStorageService,
+    private todoService: TodoService,
     private router: Router) {
   }
-
+  private roles: string[] = [];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showModeratorBoard = false;
+  showModeratorUser = false;
+  username?: string;
   todos: Todo[] = [];
   editing: boolean = false;
   editingTodo: Todo = new Todo();
@@ -33,6 +41,18 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit() {
     this.getTodos();
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+
+      this.username = user.username;
+    }
   }
 
   getTodos() {
@@ -84,6 +104,10 @@ export class TodoListComponent implements OnInit {
   clearEditing(): void {
     this.editingTodo = new Todo();
     this.editing = false;
+  }
+
+  redirectLoginPage() {
+    this.router.navigate(['login']);
   }
 
 }

@@ -1,3 +1,4 @@
+import { CoverComponent } from './template/cover/cover.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
 import { BoardAdminComponent } from './component/board-admin/board-admin.component';
 import { BoardModeratorComponent } from './component/board-moderator/board-moderator.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: '', component: TodoListComponent },
+  { path: 'cover', component: CoverComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 
