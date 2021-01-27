@@ -5,15 +5,21 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
+@Table(name = "todo")
 @JsonIgnoreProperties(value = {"createdAt"}, allowGetters = true)
 public class Todo {
 
@@ -28,4 +34,11 @@ public class Todo {
 	private Boolean completed = false;
 
     private Date createdAt = new Date();
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private User user;
+	
 }
