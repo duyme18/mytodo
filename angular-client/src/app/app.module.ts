@@ -15,8 +15,6 @@ import { RegisterComponent } from './component/register/register.component';
 import { HeaderComponent } from './template/header/header.component';
 import { FooterComponent } from './template/footer/footer.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
-import { TodoService } from 'src/app/service/todo.service';
-import { CoverComponent } from './template/cover/cover.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +29,6 @@ import { CoverComponent } from './template/cover/cover.component';
     HeaderComponent,
     FooterComponent,
     TodoListComponent,
-    CoverComponent,
   ],
   imports: [
     BrowserModule,
