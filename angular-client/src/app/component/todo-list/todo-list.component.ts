@@ -12,17 +12,13 @@ import { TodoService } from 'src/app/service/todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  constructor(
-    private tokenStorageService: TokenStorageService,
-    private todoService: TodoService,
-    private router: Router) {
-  }
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   showModeratorUser = false;
   username?: string;
+  userId?: string;
   todos: Todo[] = [];
   editing: boolean = false;
   editingTodo: Todo = new Todo();
@@ -33,6 +29,13 @@ export class TodoListComponent implements OnInit {
     description: new FormControl('', [Validators.required])
   });
 
+  constructor(
+    private tokenStorageService: TokenStorageService,
+    private todoService: TodoService,
+    private router: Router) {
+    this.userId = this.tokenStorageService.getUserId();
+  }
+
   get f() {
     return this.todoForm.controls;
   }
@@ -40,7 +43,7 @@ export class TodoListComponent implements OnInit {
   @ViewChild("description") descriptionInput?: ElementRef;
 
   ngOnInit() {
-    this.getTodos();
+    this.getTodosByUser();
 
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
@@ -61,8 +64,14 @@ export class TodoListComponent implements OnInit {
     });
   }
 
+  getTodosByUser() {
+    this.todoService.getTodosByUser(this.userId).subscribe((data) => {
+      this.todos = data;
+    })
+  }
+
   createTodo(todoForm: NgForm): void {
-    this.todoService.addTodo(this.newTodo)
+    this.todoService.addTodo(this.userId, this.newTodo)
       .subscribe(createTodo => {
         todoForm.reset();
         this.newTodo = new Todo();
