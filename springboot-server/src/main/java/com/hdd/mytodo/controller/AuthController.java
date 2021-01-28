@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hdd.mytodo.model.ERole;
 import com.hdd.mytodo.model.Role;
 import com.hdd.mytodo.model.User;
+import com.hdd.mytodo.payload.request.LoginRequest;
 import com.hdd.mytodo.payload.request.SignupRequest;
 import com.hdd.mytodo.payload.response.JwtResponse;
 import com.hdd.mytodo.payload.response.MessageResponse;
@@ -38,22 +39,21 @@ public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 
-	
 	@Autowired
 	UserRepository userRepository;
-	
-	
+
 	@Autowired
 	RoleRepository roleRepository;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	JwtUtils jwtUtils;
-	
+
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Validated @RequestBody com.hdd.mytodo.payload.request.LoginRequest loginRequest) {
+	public ResponseEntity<?> authenticateUser(
+			@Validated @RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -64,10 +64,10 @@ public class AuthController {
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(
-				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(),
+				userDetails.getFullname(), userDetails.getEmail(), roles));
 	}
-	
+
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Validated @RequestBody SignupRequest signupRequest) {
 		if (userRepository.existsByUsername(signupRequest.getUsername())) {
@@ -75,12 +75,12 @@ public class AuthController {
 		}
 
 		if (userRepository.existsByEmail(signupRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
 		}
 
 		// Creating user's account
-		User user = new User(signupRequest.getUsername(), signupRequest.getEmail(),
-				passwordEncoder.encode(signupRequest.getPassword()));
+		User user = new User(signupRequest.getUsername(), signupRequest.getFullname(), signupRequest.getPhoneNumber(),
+				signupRequest.getEmail(), passwordEncoder.encode(signupRequest.getPassword()));
 
 		Set<String> strRoles = signupRequest.getRole();
 		Set<Role> roles = new HashSet<>();

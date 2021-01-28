@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,8 @@ public class TodoController {
 	public ResponseEntity<?> findByUser(@PathVariable Long userId) throws ResourceNotFoundException {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
-		Sort sortEntity = Sort.by("createdAt");
+		
+		Sort sortEntity = Sort.by(Direction.DESC,"id");
 		List<Todo> todos = todoRepository.findByUser(user, sortEntity);
 		return ResponseEntity.ok().body(todos);
 	}
