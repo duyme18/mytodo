@@ -12,6 +12,8 @@ export class RegisterComponent implements OnInit {
 
   form: any = {
     username: null,
+    fullname: null,
+    phoneNumber: null,
     email: null,
     password: null
   };
@@ -27,14 +29,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const { username, email, password } = this.form;
+    const { username, fullname, phoneNumber, email, password } = this.form;
 
-    this.authService.register(username, email, password).subscribe(
+    this.authService.register(username, fullname, phoneNumber, email, password).subscribe(
       data => {
-        console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        alert('Đăng ký thành công!');
+        alert('Sign Up Success!');
         this.router.navigate(['login']);
       },
       err => {

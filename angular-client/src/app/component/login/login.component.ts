@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   userId: any;
   username: any;
+  fullname: any;
 
   constructor(
     private authService: AuthService,
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
+      this.fullname = this.tokenStorage.getFullname();
     }
   }
 
@@ -40,10 +42,10 @@ export class LoginComponent implements OnInit {
       data => {
         this.tokenStorage.saveUserId(data.id);
         this.tokenStorage.saveUsername(data.username);
+        this.tokenStorage.saveFullname(data.fullname);
         this.tokenStorage.saveAuthorities(data.roles);
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
