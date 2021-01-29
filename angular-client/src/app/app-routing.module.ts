@@ -1,4 +1,4 @@
-import { CoverComponent } from './templete/cover/cover.component';
+import { CoverComponent } from './template/cover/cover.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { RegisterComponent } from './component/register/register.component';
