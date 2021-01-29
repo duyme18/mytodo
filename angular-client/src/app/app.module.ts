@@ -12,9 +12,10 @@ import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { RegisterComponent } from './component/register/register.component';
-import { HeaderComponent } from './template/header/header.component';
-import { FooterComponent } from './template/footer/footer.component';
+import { HeaderComponent } from './templete/header/header.component';
+import { FooterComponent } from './templete/footer/footer.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
+import { CoverComponent } from './templete/cover/cover.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TodoListComponent } from './component/todo-list/todo-list.component';
     HeaderComponent,
     FooterComponent,
     TodoListComponent,
+    CoverComponent,
   ],
   imports: [
     BrowserModule,

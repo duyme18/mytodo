@@ -1,12 +1,11 @@
 <app-header></app-header>
-<div class="position-absolute mid-center" *ngIf="!isLoggedIn">
-    <button type="button" class="btn btn-info btn-lg" (click)="redirectLoginPage()">Get Start</button>
-</div>
+
 <div class="todo-content" *ngIf="isLoggedIn">
     <h1 class="page-title">My Todos</h1>
     <div class="todo-create">
         <form #todoForm="ngForm" (ngSubmit)="createTodo(todoForm)" novalidate>
-            <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required name="title" [(ngModel)]="newTodo.title" #title="ngModel">
+            <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required name="title"
+                [(ngModel)]="newTodo.title" #title="ngModel">
             <div *ngIf="title.errors && title.dirty" class="alert alert-danger">
                 <div [hidden]="!title.errors.required">
                     Title is required.
@@ -47,3 +46,4 @@
         <p>No Todos Found!</p>
     </div>
 </div>
+<app-footer></app-footer>

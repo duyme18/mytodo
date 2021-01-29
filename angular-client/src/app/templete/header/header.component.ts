@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { TokenStorageService } from './../../service/token-storage.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
   username?: string;
   fullname?: string;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -33,6 +35,6 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.tokenStorageService.signOut();
-    window.location.reload();
+    this.router.navigate(['']);
   }
 }

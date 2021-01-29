@@ -32,7 +32,8 @@ export class TodoListComponent implements OnInit {
   constructor(
     private tokenStorageService: TokenStorageService,
     private todoService: TodoService,
-    private router: Router) {
+    private router: Router
+  ) {
     this.userId = this.tokenStorageService.getUserId();
   }
 
@@ -54,7 +55,8 @@ export class TodoListComponent implements OnInit {
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
-      this.username = user.username;
+    } else {
+      this.router.navigate(['']);
     }
   }
 
@@ -114,9 +116,4 @@ export class TodoListComponent implements OnInit {
     this.editingTodo = new Todo();
     this.editing = false;
   }
-
-  redirectLoginPage() {
-    this.router.navigate(['login']);
-  }
-
 }

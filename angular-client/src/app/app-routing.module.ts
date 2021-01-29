@@ -1,3 +1,4 @@
+import { CoverComponent } from './templete/cover/cover.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { RegisterComponent } from './component/register/register.component';
@@ -9,7 +10,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'user/profile', component: ProfileComponent },
-  { path: '', component: TodoListComponent },
+  { path: 'todo', component: TodoListComponent },
+  { path: '', component: CoverComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 
