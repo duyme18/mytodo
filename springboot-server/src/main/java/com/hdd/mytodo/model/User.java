@@ -37,15 +37,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
-	@Size(max = 20)
 	private String username;
 
 	private String fullName;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
 	private String email;
 
 	private String phoneNumber;
@@ -58,10 +53,8 @@ public class User {
 
 	private String fileName;
 
-	@NotBlank
-	@Size(max = 120)
 	private String password;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
