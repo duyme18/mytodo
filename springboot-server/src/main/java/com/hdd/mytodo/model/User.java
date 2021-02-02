@@ -36,17 +36,17 @@ public class User {
 
 	private String username;
 
-	private String fullName;
-
-	private String email;
+	private String fullname;
 
 	private String phoneNumber;
 
 	private String address;
 
-	private Date birthdate;
+	private String email;
 
-	private String sex;
+	private Date dob;
+
+	private String gender;
 
 	private String fileName;
 
@@ -67,7 +67,7 @@ public class User {
 
 	public User(String username, String fullname, String phoneNumber, String email, String password) {
 		this.username = username;
-		this.fullName = fullname;
+		this.fullname = fullname;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.password = password;
