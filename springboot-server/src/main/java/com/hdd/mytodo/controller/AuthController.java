@@ -71,11 +71,15 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Validated @RequestBody SignupRequest signupRequest) {
 		if (userRepository.existsByUsername(signupRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
 		}
 
 		if (userRepository.existsByEmail(signupRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Email is already taken!"));
+		}
+		
+		if(userRepository.existsByPhoneNumber(signupRequest.getPhoneNumber())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Phone Number is already taken!")); 
 		}
 
 		// Creating user's account
