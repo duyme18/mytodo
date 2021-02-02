@@ -46,8 +46,6 @@ export class LoginComponent implements OnInit {
 
     this.submitted = true;
 
-    this.alertService.clear();
-
     if (this.loginForm?.invalid) {
       return;
     }
@@ -68,7 +66,6 @@ export class LoginComponent implements OnInit {
 
       },
       err => {
-        this.alertService.error(err);
         this.loading = false;
       }
     );

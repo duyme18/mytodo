@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       fullname: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
@@ -55,11 +55,11 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     this.authService.register(this.registerForm?.value).pipe(first()).subscribe(data => {
-      this.alertService.success('Regítration successful', true);
+      alert('Regítration successful!');
       this.router.navigate(['login']);
     },
       error => {
-        this.alertService.error(error);
+        this.errorMessage = error.error.message;
         this.loading = false;
       }
     );
