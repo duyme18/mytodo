@@ -21,6 +21,9 @@ import { Permissions } from './deactivate/permissions';
 import { NotActivateTeam } from './deactivate/not-activate-team';
 import { IsAdmin } from './deactivate/is-admin';
 import { UserListComponent } from './component/user-list/user-list.component';
+import { InboxComponent } from './component/inbox/inbox.component';
+import { SidebarComponent } from './template/sidebar/sidebar.component';
+import { NavbarComponent } from './template/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { UserListComponent } from './component/user-list/user-list.component';
     TodoListComponent,
     CoverComponent,
     UserListComponent,
+    InboxComponent,
+    SidebarComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

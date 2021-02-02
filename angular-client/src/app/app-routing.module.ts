@@ -1,3 +1,4 @@
+import { InboxComponent } from './component/inbox/inbox.component';
 import { UserListComponent } from './component/user-list/user-list.component';
 import { CoverComponent } from './template/cover/cover.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate: [IsAdmin] },
   { path: 'user/profile', component: ProfileComponent },
   { path: 'todo', component: TodoListComponent },
-  { path: '', component: CoverComponent },
+  { path: 'app', component: CoverComponent },
+  { path: 'app/inbox', component: InboxComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 

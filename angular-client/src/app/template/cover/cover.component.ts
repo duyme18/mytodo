@@ -18,9 +18,9 @@ export class CoverComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
-    if (this.isLoggedIn) {
-      this.router.navigate(['todo']);
-    }
+    // if (this.isLoggedIn) {
+    //   this.router.navigate(['todo']);
+    // }
   }
 
   redirectLoginPage() {
