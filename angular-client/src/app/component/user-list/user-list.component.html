@@ -1,0 +1,33 @@
+<app-header></app-header>
+<div class="container">
+    <span *ngIf="totalUser > 0">
+        {{ totalUser }} Users
+    </span>
+    <table id="customers" style="border-collapse: collapse;">
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Fullname</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Daet of Birth</th>
+            <th>Gender</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.fullname }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.dob }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.role }}</td>
+            <td><button type="button" class="btn btn-primary" (click)="deleteUser(user.id)">Delete</button></td>
+        </tr>
+    </table>
+</div>
+<app-footer></app-footer>

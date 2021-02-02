@@ -14,7 +14,7 @@ export class Permissions {
     }
 
     isAdmin(): boolean {
-        if (this.token.getAuthorities()[0] === 'ROLE_ADMIN') {
+        if (this.token.getUser().roles[0] === 'ROLE_ADMIN') {
             return true;
         } else {
             return false;

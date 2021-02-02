@@ -19,13 +19,12 @@ export class LoginComponent implements OnInit {
   userId: any;
   username: any;
   fullname: any;
-
+  auth: any;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private tokenStorage: TokenStorageService,
-    private alertService: AlertService) { }
+    private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
 

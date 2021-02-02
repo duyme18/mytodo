@@ -20,6 +20,7 @@ import { CoverComponent } from './template/cover/cover.component';
 import { Permissions } from './deactivate/permissions';
 import { NotActivateTeam } from './deactivate/not-activate-team';
 import { IsAdmin } from './deactivate/is-admin';
+import { UserListComponent } from './component/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { IsAdmin } from './deactivate/is-admin';
     FooterComponent,
     TodoListComponent,
     CoverComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
