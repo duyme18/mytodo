@@ -1,3 +1,4 @@
+import { CanActivateTeam } from './deactivate/can-activate-team';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -16,6 +17,9 @@ import { HeaderComponent } from './template/header/header.component';
 import { FooterComponent } from './template/footer/footer.component';
 import { TodoListComponent } from './component/todo-list/todo-list.component';
 import { CoverComponent } from './template/cover/cover.component';
+import { Permissions } from './deactivate/permissions';
+import { NotActivateTeam } from './deactivate/not-activate-team';
+import { IsAdmin } from './deactivate/is-admin';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,7 @@ import { CoverComponent } from './template/cover/cover.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [Permissions, CanActivateTeam, NotActivateTeam, IsAdmin],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
