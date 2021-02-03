@@ -18,7 +18,7 @@ export class NotActivateTeam implements CanActivate {
         if (this.permission.canActivate() === false) {
             return true;
         } else {
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('app/todo');
             return false;
         }
     }

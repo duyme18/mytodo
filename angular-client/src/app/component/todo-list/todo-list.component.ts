@@ -56,7 +56,7 @@ export class TodoListComponent implements OnInit {
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
     }
   }
 

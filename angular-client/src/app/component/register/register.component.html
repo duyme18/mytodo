@@ -5,15 +5,16 @@
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" formControlName="username"
+                <input type="text" class="form-control" formControlName="username" name="username"
                     [ngClass]="{ 'is-invalid': submitted && f?.username.errors }" />
                 <div *ngIf="submitted && f?.username.errors" class="invalid-feedback">
                     <div *ngIf="f?.username.errors?.required">Username is required</div>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="fullname">Fullname</label>
-                <input type="text" class="form-control" formControlName="fullname"
+                <input type="text" class="form-control" formControlName="fullname" name="fullname"
                     [ngClass]="{ 'is-invalid': submitted && f?.fullname.errors }" />
                 <div *ngIf="submitted && f?.fullname.errors" class="invalid-feedback">
                     <div *ngIf="f?.fullname.errors?.required">Fullname is required</div>
@@ -21,16 +22,18 @@
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
-                <input type="text" class="form-control" formControlName="phoneNumber"
+                <input type="text" class="form-control" formControlName="phoneNumber" name="phoneNumber"
                     [ngClass]="{ 'is-invalid': submitted && f?.phoneNumber.errors }" />
                 <div *ngIf="submitted && f?.phoneNumber.errors" class="invalid-feedback">
                     <div *ngIf="f?.phoneNumber.errors?.required">Phone number is required</div>
+                    <div *ngIf="f?.phoneNumber.errors?.pattern">Phone number must be in the correct format.</div>
                     <div *ngIf="f?.phoneNumber.errors?.minlength">Phone number must be at least 10 characters</div>
+                    <div *ngIf="f?.phoneNumber.errors?.maxlength">Phone number must be at most 10 characters</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" formControlName="email"
+                <input type="email" class="form-control" formControlName="email" name="email"
                     [ngClass]="{ 'is-invalid': submitted && f?.email.errors }" />
                 <div *ngIf="submitted && f?.email.errors" class="invalid-feedback">
                     <div *ngIf="f?.email.errors?.required">Email is required</div>
@@ -62,7 +65,7 @@
                 <div *ngIf="submitted && f?.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required
                 </div>
             </div>
-            <div class="alert alert-danger" role="alert" *ngIf="submitted && !loading">
+            <div class="alert alert-danger" role="alert" *ngIf="submitted && !loading && errorMessage">
                 {{ errorMessage }}
             </div>
             <div class="form-group">

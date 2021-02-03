@@ -1,9 +1,4 @@
-<div class="wrapper">
-    <!-- Sidebar Holder -->
-    <app-sidebar></app-sidebar>
-    <!-- Page Content Holder -->
-    <div id="content">
-        <app-navbar></app-navbar>
-        <app-todo-list></app-todo-list>
-    </div>
+<app-header></app-header>
+<div class="position-absolute mid-center" *ngIf="!isLoggedIn">
+    <button type="button" class="btn btn-info btn-lg" (click)="redirectLoginPage()">Get Start</button>
 </div>

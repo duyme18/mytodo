@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveUser(data);
         this.roles = this.tokenStorage.getUser().roles;
         this.userId = this.tokenStorage.getUserId();
-        this.router.navigate(['']);
+        this.router.navigate(['app/todo']);
 
       },
       err => {
