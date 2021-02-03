@@ -70,6 +70,11 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Validated @RequestBody SignupRequest signupRequest) {
+		
+		if(userRepository.existsByUsername("admin") || (userRepository.existsByUsername("manager") || (userRepository.existsByUsername("adminstrator")))) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Invalid Username!"));
+		}
+		
 		if (userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
 		}
