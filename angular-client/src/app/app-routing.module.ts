@@ -16,9 +16,8 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate: [IsAdmin] },
   { path: 'user/profile', component: ProfileComponent },
   { path: 'app/todo', component: TodoListComponent },
-  { path: '', component: CoverComponent },
   { path: 'app/inbox', component: InboxComponent },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/app/todo', pathMatch: 'full' },
 ];
 
 

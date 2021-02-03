@@ -8,6 +8,7 @@
         <li class="active">
             <a routerLink="/app/inbox">Inbox</a>
             <a href="#">Today</a>
+            <a href="users" *ngIf="this.showAdminBoard">List Users</a>
             <a href="#">Upcoming</a>
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Project</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">

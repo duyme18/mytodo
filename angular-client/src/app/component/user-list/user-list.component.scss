@@ -26,6 +26,18 @@
     color: white;
 }
 
-.pointer {
-    cursor: pointer;
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    perspective: 1500px;
+}
+
+#content {
+    margin-top: -40px;
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
 }
