@@ -31,7 +31,7 @@ import com.hdd.mytodo.repository.TodoRepository;
 public class CommentController {
 
 	@Autowired
-	private TodoRepository bookRepository;
+	private TodoRepository todoRepository;
 
 	@Autowired
 	private CommentRepository commentRepository;
@@ -56,7 +56,7 @@ public class CommentController {
 	@PostMapping("comment/{id}")
 	public ResponseEntity<Comment> addComment(@PathVariable Long id, @RequestBody Comment comment)
 			throws ResourceNotFoundException {
-		Todo todo = bookRepository.findById(id)
+		Todo todo = todoRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Todo not found for this id :: " + id));
 
 		LocalDateTime now = LocalDateTime.now();
@@ -105,4 +105,14 @@ public class CommentController {
 
 	}
 
+	@GetMapping("todo/comments/{id}")
+	public ResponseEntity<?> findByAuthor(@PathVariable Long id) throws ResourceNotFoundException {
+		Todo todo = todoRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Todo not found for this id :: " + id));
+
+		List<Comment> comments = commentRepository.findByTodo(todo);
+
+		return ResponseEntity.ok().body(comments);
+	}
+	
 }
