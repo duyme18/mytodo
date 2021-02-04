@@ -10,8 +10,7 @@
                 <h1 class="page-title">My Todos</h1>
                 <div class="todo-create">
                     <form #todoForm="ngForm" (ngSubmit)="createTodo(todoForm)" novalidate>
-                        <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required
-                            name="title" [(ngModel)]="newTodo.title" #title="ngModel">
+                        <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required name="title" [(ngModel)]="newTodo.title" #title="ngModel">
                         <div *ngIf="title.errors && title.dirty" class="alert alert-danger">
                             <div [hidden]="!title.errors.required">
                                 Title is required.
@@ -29,7 +28,7 @@
                             <span class="todo-actions">
                                 <a>
                                     <i class="material-icons" data-toggle="modal"
-                                        data-target="#exampleModalComment">comment</i>
+                                        data-target="#exampleModalComment" (click)="getAllCommentByTodo(todo.id)">comment</i>
                                 </a>
                                 <a (click)="editTodo(todo)">
                                     <i class="material-icons edit">edit</i>
@@ -61,8 +60,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModalComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -76,6 +74,79 @@
                     <div class="row">
                         <div class="col-sm">
                             Comments
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="commentForm">
+                                <div class="form-group">
+                                    <textarea class="form-control" formControlName="content" rows="3"></textarea>
+                                </div>
+                                <button type="submit" (click)="addComment(this.todoId)" class="btn btn-primary">Submit</button>
+                                <div>
+                                    <div *ngIf="this.tokenJWT ; else other" class="text-right">
+                                    </div>
+                                    <ng-template #other>
+                                        <div class="text-center text-secondary">
+                                            <h6>Bạn cần đăng nhập để viết đánh giá <a [routerLink]="'/login'">Đăng nhập!</a></h6>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Single Comment -->
+                        <div class="media mb-4" *ngFor="let comment of comments , index as i">
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            <div class="media-body">
+                                <label class="text-success">@{{ comment.user?.username }}<h6 class="text-secondary">{{ comment.commentDate
+                    }}
+                </h6>
+            </label>
+                                <p>
+                                    {{comment.content}}
+                                </p>
+                                <div class="text-left" *ngIf="this.userId == comment.user?.id">
+                                    <!--              edit/delete-->
+                                    <a #closeModalRef class="btn btn-primary a-btn-slide-text" data-toggle="collapse" [attr.data-target]="'#collapseExample' + i" aria-expanded="false">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <span><strong class="pointer">Sửa</strong></span>
+                                    </a>
+                                    <a (click)="getCommentId(comment.commentId)" class="btn btn-warning a-btn-slide-text" data-toggle="modal" data-target="#exampleModalCenter">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <span><strong class="pointer">Xóa</strong></span>
+                                    </a>
+                                    <div class="collapse" [id]="'collapseExample'+i">
+                                        <form>
+                                            <div class="card card-body">
+                                                <textarea contenteditable="true" [formControl]="commentUpdate" [value]="comment.content" rows="3"></textarea>
+                                                <br />
+                                                <div class="text-right">
+                                                    <button class="btn btn-outline-secondary" (click)="closeForm(closeModalRef)">Đóng</button>&nbsp;&nbsp;
+                                                    <button class="btn btn-outline-primary" (click)="updateComment(comment.commentId, closeModalRef)">Cập nhật
+                                </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-danger" id="exampleModalCenterTitle">Xóa đánh giá</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                                    </div>
+                                    <div class="modal-body text-dark text-center">
+                                        <h5>Bạn muốn xóa đánh giá</h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button #closeModalRef2 type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-danger" (click)="deleteComment(this.commentId, closeModalRef2)">Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import { User } from './user';
 import { Todo } from './todo';
 
 export interface Comment {
-    id: number;
+    commentId: number;
     content: string;
     commentDate: Date;
     isEdit: Boolean;

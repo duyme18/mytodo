@@ -21,13 +21,18 @@ export class CommentService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getAllCommentByTodo(todoId: number) {
+  public getAllCommentByTodo(todoId?: number) {
     const URL = `${this.apiURL}todo/comments/` + todoId;
     return this.httpClient.get<any>(URL, this.httpOptions).pipe(catchError(this.handleError));
   }
 
-  public addComment(bookId: number, comment: Comment) {
-    const URL = `${this.apiURL}comment/` + bookId;
+  public getComment(commentId: number) {
+    const URL = `${this.apiURL}comment/` +commentId;
+    return this.httpClient.get<any>(URL, this.httpOptions).pipe(catchError(this.handleError));
+  }
+
+  public addComment(id: number, comment: Comment) {
+    const URL = `${this.apiURL}comment/` + id;
     return this.httpClient.post<any>(URL, comment, this.httpOptions).pipe(catchError(this.handleError));
   }
 
@@ -37,7 +42,7 @@ export class CommentService {
   }
 
   public modifyComment(comment: Comment) {
-    const URL = `${this.apiURL}comment/` + comment.id;
+    const URL = `${this.apiURL}comment/` + comment.commentId;
     return this.httpClient.put<any>(URL, comment, this.httpOptions).pipe(catchError(this.handleError));
   }
 
