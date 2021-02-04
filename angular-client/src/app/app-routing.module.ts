@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'user/profile', component: ProfileComponent },
   { path: 'app/todo', component: TodoListComponent },
   { path: 'app/inbox', component: InboxComponent },
-  { path: '', redirectTo: '/app/todo', pathMatch: 'full' },
+  { path: '', component: CoverComponent },
 ];
 
 

@@ -5,11 +5,19 @@
 
     <ul class="list-unstyled components">
         <p>Dummy Heading</p>
-        <li class="active">
-            <a routerLink="/app/inbox">Inbox</a>
-            <a href="#">Today</a>
+        <li>
+            <a href="#"><i class="material-icons">today</i> Today</a>
+        </li>
+        <li>
+            <a href="#"><i class="material-icons">inbox</i> Inbox</a>
+        </li>
+        <li>
             <a href="users" *ngIf="this.showAdminBoard">List Users</a>
+        </li>
+        <li>
             <a href="#">Upcoming</a>
+        </li>
+        <li class="active">
             <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Project</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>

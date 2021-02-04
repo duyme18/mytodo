@@ -73,7 +73,6 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    margin-top: -40px;
     padding: 20px;
     background: #6d7fcc;
 }
@@ -151,13 +150,7 @@ a.article:hover {
     CONTENT STYLE
 ----------------------------------------------------- */
 
-#content {
-    margin-top: -40px;
-    width: 100%;
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
-}
+
 
 #sidebarCollapse {
     width: 40px;
@@ -231,4 +224,18 @@ a.article:hover {
 
 .pointer {
     cursor: pointer;
+}
+
+.navbar {
+    margin-top: 40px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .5rem 1rem;
 }

@@ -19,7 +19,7 @@ export class CoverComponent implements OnInit {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      this.router.navigate(['']);
+      this.router.navigate(['app/todo']);
     }
   }
 
