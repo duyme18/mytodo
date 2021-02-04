@@ -1,3 +1,4 @@
+import { CommentService } from './../../service/comment.service';
 import { TokenStorageService } from './../../service/token-storage.service';
 import { Router } from '@angular/router';
 import { Todo } from './../../model/todo';
@@ -23,6 +24,8 @@ export class TodoListComponent implements OnInit {
   editing: boolean = false;
   editingTodo: Todo = new Todo();
   newTodo: Todo = new Todo();
+  public comment?: Comment;
+  public comments: Comment[] = [];
 
   public todoForm = new FormGroup({
     id: new FormControl(''),
@@ -30,6 +33,7 @@ export class TodoListComponent implements OnInit {
   });
 
   constructor(
+    private commentService: CommentService,
     private tokenStorageService: TokenStorageService,
     private todoService: TodoService,
     private router: Router
@@ -116,4 +120,8 @@ export class TodoListComponent implements OnInit {
     this.editingTodo = new Todo();
     this.editing = false;
   }
+
+  // getAllCommentByTodo(){
+  //   this.commentService.getAllCommentByTodo
+  // }
 }
