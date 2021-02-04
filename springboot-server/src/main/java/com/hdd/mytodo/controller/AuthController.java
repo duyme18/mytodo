@@ -52,8 +52,7 @@ public class AuthController {
 	JwtUtils jwtUtils;
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(
-			@Validated @RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<?> authenticateUser(@Validated @RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -70,11 +69,11 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Validated @RequestBody SignupRequest signupRequest) {
-		
-		if(userRepository.existsByUsername("admin") || (userRepository.existsByUsername("manager") || (userRepository.existsByUsername("adminstrator")))) {
+
+		if (signupRequest.getUsername().contains("admin") || signupRequest.getUsername().contains("manager") || signupRequest.getUsername().contains("adminstrator")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Invalid Username!"));
 		}
-		
+
 		if (userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
 		}
@@ -82,9 +81,9 @@ public class AuthController {
 		if (userRepository.existsByEmail(signupRequest.getEmail())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Email is already taken!"));
 		}
-		
-		if(userRepository.existsByPhoneNumber(signupRequest.getPhoneNumber())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Phone Number is already taken!")); 
+
+		if (userRepository.existsByPhoneNumber(signupRequest.getPhoneNumber())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Phone Number is already taken!"));
 		}
 
 		// Creating user's account
