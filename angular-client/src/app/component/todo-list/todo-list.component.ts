@@ -19,6 +19,7 @@ export class TodoListComponent implements OnInit {
   username?: string;
   userId?: string;
   todos: Todo[] = [];
+  todo?: Todo;
   editing: boolean = false;
   editingTodo: Todo = new Todo();
   newTodo: Todo = new Todo();
@@ -66,6 +67,13 @@ export class TodoListComponent implements OnInit {
     } else {
       this.router.navigate(['login']);
     }
+  }
+
+  getTodo(id: any) {
+    this.todoService.getTodo(id).subscribe((data) => {
+      this.todo = data.title;
+      console.log(this.todo)
+    })
   }
 
   getTodosByUser() {
@@ -120,8 +128,10 @@ export class TodoListComponent implements OnInit {
 
   getAllCommentByTodo(id: any): void {
     this.commentService.getAllCommentByTodo(id).subscribe(data => {
+
       this.comments = data;
       this.todoId = id;
+      this.getTodo(this.todoId);
     });
   }
 

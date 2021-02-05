@@ -10,13 +10,7 @@
                 <h1 class="page-title">My Todos</h1>
                 <div class="todo-create">
                     <form #todoForm="ngForm" (ngSubmit)="createTodo(todoForm)" novalidate>
-                        <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required
-                            name="title" [(ngModel)]="newTodo.title" #title="ngModel">
-                        <div *ngIf="title.errors && title.dirty" class="alert alert-danger">
-                            <div [hidden]="!title.errors.required">
-                                Title is required.
-                            </div>
-                        </div>
+                        <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required name="title" [(ngModel)]="newTodo.title" #title="ngModel">
                     </form>
                 </div>
                 <ul class="todo-list">
@@ -61,8 +55,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,46 +66,44 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div>
-                        <p class="page-title">Comments</p>
-                        <div class="todo-create">
-                            <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
-                                <input type="text" class="form-control" formControlName="content">
-                            </form>
-                        </div>
-                        <ul class="todo-list">
-                            <li *ngFor="let comment of comments" [class.completed]="comment.isEdit === true">
-                                <div class="todo-row" *ngIf="!editing || editingComment.commentId != comment.commentId">
-                                    <span class="todo-title">{{ comment.content }}</span>
-                                    <span class="todo-actions">
-                                        <a (click)="editComment(comment)">
-                                            <i class="material-icons edit">edit</i>
-                                        </a>
-                                        <a (click)="deleteComment(comment.commentId)">
-                                            <i class="material-icons delete">clear</i>
-                                        </a>
-                                    </span>
-                                </div>
-                                <div class="todo-edit"
-                                    *ngIf="editing && editingComment.commentId === comment.commentId">
-                                    <input class="form-control" type="text" [(ngModel)]="editingComment.content"
-                                        required>
-                                    <span class="edit-actions">
-                                        <a (click)="updateComment(editingComment)">
-                                            <i class="material-icons">done</i>
-                                        </a>
-                                        <a (click)="clearEditingComment()">
-                                            <i class="material-icons">clear</i>
-                                        </a>
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="comment-row">
+                        <span class="page-title">{{ todo }}</span>
                     </div>
+                    <div class="dropdown-divider"></div>
+                    <p class="page-title">Comments</p>
+
+                    <div class="comment-create">
+                        <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
+                            <input type="text" class="form-control" formControlName="content">
+                        </form>
+                    </div>
+                    <ul class="comment-list">
+                        <li *ngFor="let comment of comments" [class.completed]="comment.isEdit === true">
+                            <div class="comment-row" *ngIf="!editing || editingComment.commentId != comment.commentId">
+                                <span class="comment-content">{{ comment.content }}</span>
+                                <span class="comment-actions">
+                                    <a (click)="editComment(comment)">
+                                        <i class="material-icons edit">edit</i>
+                                    </a>
+                                    <a (click)="deleteComment(comment.commentId)">
+                                        <i class="material-icons delete">clear</i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="comment-edit" *ngIf="editing && editingComment.commentId === comment.commentId">
+                                <input class="form-control" type="text" [(ngModel)]="editingComment.content" required>
+                                <span class="edit-actions">
+                                    <a (click)="updateComment(editingComment)">
+                                        <i class="material-icons">done</i>
+                                    </a>
+                                    <a (click)="clearEditingComment()">
+                                        <i class="material-icons">clear</i>
+                                    </a>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

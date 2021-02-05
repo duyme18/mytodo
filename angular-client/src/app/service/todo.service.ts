@@ -20,6 +20,10 @@ export class TodoService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getTodo(id: any) {
+    const URL = `${this.apiURL}/` + id;
+    return this.httpClient.get<any>(URL, this.httpOptions).pipe(catchError(this.handleError));
+  }
 
   getTodos() {
     const URL = `${this.apiURL}`;
