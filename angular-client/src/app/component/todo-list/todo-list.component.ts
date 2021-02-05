@@ -15,21 +15,14 @@ import { TodoService } from 'src/app/service/todo.service';
 export class TodoListComponent implements OnInit {
 
   private roles: string[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  showModeratorUser = false;
+  private isLoggedIn = false;
   username?: string;
   userId?: string;
   todos: Todo[] = [];
   editing: boolean = false;
   editingTodo: Todo = new Todo();
   newTodo: Todo = new Todo();
-  public comment?: Comment;
-  public comments: Comment[] = [];
-  public commentForm = new FormGroup({
-    content: new FormControl('')
-  });
+
   public commentUpdate = new FormControl();
   public commentId: any;
   public tokenJWT: string;
@@ -38,13 +31,19 @@ export class TodoListComponent implements OnInit {
     id: new FormControl(''),
     description: new FormControl('', [Validators.required])
   });
+  newComment: Comment = new Comment();
+  editingComment: Comment = new Comment();
+  public comments: Comment[] = [];
+  public commentForm = new FormGroup({
+    id: new FormControl(''),
+    content: new FormControl('')
+  });
 
   constructor(
     private commentService: CommentService,
     private tokenStorageService: TokenStorageService,
     private todoService: TodoService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.userId = this.tokenStorageService.getUserId();
     this.tokenJWT = this.tokenStorageService.getToken();
@@ -53,8 +52,6 @@ export class TodoListComponent implements OnInit {
   get f() {
     return this.todoForm.controls;
   }
-
-  @ViewChild("description") descriptionInput?: ElementRef;
 
   ngOnInit() {
 
@@ -66,18 +63,9 @@ export class TodoListComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
     } else {
       this.router.navigate(['login']);
     }
-  }
-
-  getTodos() {
-    this.todoService.getTodos().subscribe((data) => {
-      this.todos = data;
-    });
   }
 
   getTodosByUser() {
@@ -91,7 +79,7 @@ export class TodoListComponent implements OnInit {
       .subscribe(createTodo => {
         todoForm.reset();
         this.newTodo = new Todo();
-        this.todos.unshift(createTodo)
+        this.todos.unshift(createTodo);
       });
   }
 
@@ -112,7 +100,7 @@ export class TodoListComponent implements OnInit {
       });
   }
 
-  toggleCompleted(todoData: Todo): void {
+  toggleCompletedTodo(todoData: Todo): void {
     todoData.completed = !todoData.completed;
     this.todoService.modifyTodo(todoData)
       .subscribe(updatedTodo => {
@@ -138,7 +126,7 @@ export class TodoListComponent implements OnInit {
     });
   }
 
-  addComment(id: any) {
+  addComment() {
 
     const { content } = this.commentForm.value;
 
@@ -147,48 +135,45 @@ export class TodoListComponent implements OnInit {
     }
 
     const comment: any = {
-      todiId: this.todoId,
+      todoId: this.todoId,
       content: content,
       user: {
         id: this.tokenStorageService.getUserId()
       }
     }
 
-    console.log(this.todoId)
     this.commentService.addComment(this.todoId, comment).subscribe((result) => {
-      this.getAllCommentByTodo(id);
       this.commentForm.reset();
-    })
-  }
-
-  updateComment(commentId: number, closeModalRef: HTMLAnchorElement) {
-
-    if (this.commentUpdate.value == null) {
-      return this.closeForm(this.todoId, closeModalRef);
-    }
-
-    const comment: any = {
-      commentId: commentId,
-      content: this.commentUpdate.value
-    };
-
-    this.commentService.modifyComment(comment).subscribe(result => {
-      this.closeForm(this.todoId, closeModalRef);
-    }, error => {
-      console.log(error);
+      this.comments.unshift(comment);
     });
   }
 
-  // getComment() {
-  //   this.commentService.getComment(this.commentId).subscribe((data) => {
+  updateComment(commentData: Comment): void {
+    this.commentService.modifyComment(commentData).subscribe(updatedComment => {
+      this.commentService.getAllCommentByTodo(this.todoId).subscribe(data => {
+        this.comments = data;
+      });
+      this.clearEditing();
+    });
+  }
 
-  //     this.comment = data;
-  //     console.log(this.commentId);
-  //   });
-  // }
+  editComment(commentData: Comment): void {
+    this.editing = true;
+    Object.assign(this.editingComment, commentData);
+  }
 
-  getCommentId(id: number) {
-    this.commentId = id;
+  clearEditingComment(): void {
+    this.editingComment = new Comment();
+    this.editing = false;
+  }
+
+  toggleCompletedComment(commentData: Comment): void {
+    commentData.isEdit = !commentData.isEdit;
+    this.commentService.modifyComment(commentData)
+      .subscribe(updatedComment => {
+        const existingComment = this.comments.find(comment => comment.commentId === updatedComment.id);
+        Object.assign(existingComment, updatedComment);
+      });
   }
 
   closeForm(id: any, closeModalRef: HTMLAnchorElement) {
@@ -197,12 +182,9 @@ export class TodoListComponent implements OnInit {
     this.commentUpdate.reset();
   }
 
-  deleteComment(id: any, closeModalRef2: HTMLButtonElement) {
-    this.commentService.deleteComment(id).subscribe(result => {
+  deleteComment(id: any) {
+    this.commentService.deleteComment(id).subscribe(() => {
       this.comments = this.comments.filter(comment => comment.commentId != id);
-      this.getAllCommentByTodo(id);
-    }, error => {
-      console.log(error);
     });
   }
 }
