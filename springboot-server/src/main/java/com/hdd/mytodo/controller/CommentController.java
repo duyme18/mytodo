@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,7 +40,9 @@ public class CommentController {
 
 	@GetMapping("comments")
 	public ResponseEntity<?> findAllComment() {
-		List<Comment> comments = commentRepository.findAll();
+		
+		Sort sortEntity = Sort.by(Direction.ASC,"id");
+		List<Comment> comments = commentRepository.findAll(sortEntity);
 		if (comments.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -71,23 +75,20 @@ public class CommentController {
 	}
 
 	@PutMapping("comment/{id}")
-	public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment commentDetails)
+	public ResponseEntity<Comment> updateComment(@PathVariable("id") Long id, @RequestBody Comment commentDetails)
 			throws ResourceNotFoundException {
-
-		Comment comment = commentRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Comment not found for this id :: " + id));
 
 		LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String date = now.format(formatter);
         
-		comment.setContent(commentDetails.getContent());
-		comment.setCommentDate(date);
-		comment.setIsEdit(true);
-
-		final Comment updateCommnet = commentRepository.save(comment);
-
-		return ResponseEntity.ok(updateCommnet);
+		
+		return commentRepository.findById(id).map(commentData ->{
+			commentData.setContent(commentDetails.getContent());
+			commentData.setCommentDate(date);
+			Comment updatedComment = commentRepository.save(commentData);
+			return ResponseEntity.ok().body(updatedComment);
+		}).orElse(ResponseEntity.notFound().build());
 	}
 
 	@DeleteMapping("comment/{id}")
