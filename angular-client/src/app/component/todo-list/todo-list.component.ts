@@ -91,7 +91,6 @@ export class TodoListComponent implements OnInit {
   }
 
   updateTodo(todoData: Todo): void {
-    console.log(todoData);
     this.todoService.modifyTodo(todoData)
       .subscribe(updatedTodo => {
         const existingTodo = this.todos.find(todo => todo.id === updatedTodo.id);

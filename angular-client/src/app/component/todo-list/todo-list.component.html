@@ -74,7 +74,7 @@
             <div class="modal-body">
                 <div class="container">
                     <div>
-                        <h1 class="page-title">My Todos</h1>
+                        <p class="page-title">Comments</p>
                         <div class="todo-create">
                             <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
                                 <input type="text" class="form-control" formControlName="content">
@@ -83,7 +83,7 @@
                         <ul class="todo-list">
                             <li *ngFor="let comment of comments" [class.completed]="comment.isEdit === true">
                                 <div class="todo-row" *ngIf="!editing || editingComment.commentId != comment.commentId">
-                                    <span class="todo-title">{{comment.content}}</span>
+                                    <span class="todo-title">{{ comment.content }}</span>
                                     <span class="todo-actions">
                                         <a (click)="editComment(comment)">
                                             <i class="material-icons edit">edit</i>
