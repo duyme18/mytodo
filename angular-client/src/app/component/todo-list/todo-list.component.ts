@@ -72,7 +72,6 @@ export class TodoListComponent implements OnInit {
   getTodo(id: any) {
     this.todoService.getTodo(id).subscribe((data) => {
       this.todo = data.title;
-      console.log(this.todo)
     })
   }
 
@@ -153,7 +152,7 @@ export class TodoListComponent implements OnInit {
 
     this.commentService.addComment(this.todoId, comment).subscribe((result) => {
       this.commentForm.reset();
-      this.comments.unshift(comment);
+      this.getAllCommentByTodo(this.todoId);
     });
   }
 
