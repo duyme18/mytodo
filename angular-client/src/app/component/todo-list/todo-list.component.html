@@ -9,8 +9,8 @@
             <div class="todo-content">
                 <h1 class="page-title">My Todos</h1>
                 <div class="todo-create">
-                    <form #todoForm="ngForm" (ngSubmit)="createTodo(todoForm)" novalidate>
-                        <input type="text" id="title" class="form-control" placeholder="Enter a todo..." required name="title" [(ngModel)]="newTodo.title" #title="ngModel">
+                    <form [formGroup]="todoForm" (ngSubmit)="addTodo()" novalidate>
+                        <input type="text" class="form-control" formControlName="title" placeholder="Write a todo...">
                     </form>
                 </div>
                 <ul class="todo-list">
@@ -19,7 +19,7 @@
                             <a class="todo-completed" (click)="toggleCompletedTodo(todo)">
                                 <i class="material-icons toggle-completed-checkbox"></i>
                             </a>
-                            <span class="todo-title">{{todo.title}}</span>
+                            <span class="todo-title">{{ todo.title }}</span>
                             <span class="todo-actions">
                                 <a>
                                     <i class="material-icons" data-toggle="modal" data-target=".bd-example-modal-lg"
@@ -74,7 +74,7 @@
 
                     <div class="comment-create">
                         <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
-                            <input type="text" class="form-control" formControlName="content">
+                            <input type="text" class="form-control" formControlName="content" placeholder="Write a comment...">
                         </form>
                     </div>
                     <ul class="comment-list">

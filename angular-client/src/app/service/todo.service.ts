@@ -30,12 +30,12 @@ export class TodoService {
     return this.httpClient.get<any>(URL, this.httpOptions).pipe(catchError(this.handleError));
   }
 
-  public getTodosByUser(userId?: string) {
+  public getTodosByUser(userId: number) {
     const URL = `${this.apiURL}/user/` + userId;
     return this.httpClient.get<any>(URL, this.httpOptions).pipe(catchError(this.handleError));
   }
 
-  public addTodo(userId: string | undefined, todo: Todo) {
+  public addTodo(userId: number, todo: Todo) {
     const URL = `${this.apiURL}/` + userId;
     return this.httpClient.post<any>(URL, todo, this.httpOptions).pipe(catchError(this.handleError));
   }

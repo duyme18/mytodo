@@ -17,7 +17,7 @@ export class TodoListComponent implements OnInit {
   private roles: string[] = [];
   private isLoggedIn = false;
   username?: string;
-  userId?: string;
+  userId: any;
   todos: Todo[] = [];
   todo?: Todo;
   editing: boolean = false;
@@ -30,7 +30,7 @@ export class TodoListComponent implements OnInit {
   public todoId: any;
   public todoForm = new FormGroup({
     id: new FormControl(''),
-    description: new FormControl('', [Validators.required])
+    title: new FormControl('')
   });
   newComment: Comment = new Comment();
   editingComment: Comment = new Comment();
@@ -81,12 +81,20 @@ export class TodoListComponent implements OnInit {
     })
   }
 
-  createTodo(todoForm: NgForm): void {
-    this.todoService.addTodo(this.userId, this.newTodo)
-      .subscribe(createTodo => {
-        todoForm.reset();
-        this.newTodo = new Todo();
-        this.todos.unshift(createTodo);
+  addTodo(): void {
+    const { title } = this.todoForm.value;
+
+    if (title === '') {
+      return;
+    }
+    const todo: any = {
+      title: title
+
+    }
+    this.todoService.addTodo(this.userId, todo)
+      .subscribe(addTodo => {
+        this.todoForm.reset();
+        this.getTodosByUser();
       });
   }
 
