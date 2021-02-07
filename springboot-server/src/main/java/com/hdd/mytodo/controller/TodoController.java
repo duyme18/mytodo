@@ -6,8 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,13 +44,12 @@ public class TodoController {
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));
 
-		Sort sortEntity = Sort.by(Direction.DESC, "id");
-		List<Todo> todos = todoRepository.findByUser(user, sortEntity);
+		List<Todo> todos = todoRepository.findByUser(user);
 		return ResponseEntity.ok().body(todos);
 	}
 
 	@PostMapping("/todos/{userId}")
-	public Todo createTodo(@PathVariable Long userId, @Valid @RequestBody Todo todo) throws ResourceNotFoundException {
+	public Todo createTodo(@PathVariable Long userId, @RequestBody Todo todo) throws ResourceNotFoundException {
 
 		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found for this id :: " + userId));

@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,8 +29,6 @@ public class Todo {
 	@GeneratedValue
 	private Long id;
 
-	@NotBlank
-	@Size(max = 100)
 	private String title;
 
 	private Boolean completed = false;
