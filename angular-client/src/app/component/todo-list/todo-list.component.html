@@ -55,7 +55,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -66,43 +67,52 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="comment-row">
+                    <div class="comment-content">
                         <span class="page-title">{{ todo }}</span>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <p class="page-title">Comments</p>
+                        <div class="dropdown-divider"></div>
+                        <p class="page-title">Comments</p>
 
-                    <div class="comment-create">
-                        <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
-                            <input type="text" class="form-control" formControlName="content" placeholder="Write a comment...">
-                        </form>
+                        <div class="comment-create">
+                            <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
+                                <input type="text" class="form-control" formControlName="content"
+                                    placeholder="Write a comment...">
+                            </form>
+                        </div>
+                        <ul class="comment-list">
+                            <li *ngFor="let comment of comments" [class.completed]="comment.isEdit === true">
+                                <div class="comment-row"
+                                    *ngIf="!editing || editingComment.commentId != comment.commentId">
+
+                                    <span class="comment-title">{{ comment.content }}</span>
+                                    <span class="comment-actions">
+
+                                        <a (click)="editComment(comment)">
+                                            <i class="material-icons edit">edit</i>
+                                        </a>
+                                        <a (click)="deleteComment(comment.commentId)">
+                                            <i class="material-icons delete">clear</i>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="comment-edit"
+                                    *ngIf="editing && editingComment.commentId === comment.commentId">
+                                    <input class="form-control" type="text" [(ngModel)]="editingComment.content"
+                                        required>
+                                    <span class="edit-actions">
+                                        <a (click)="updateComment(editingComment)">
+                                            <i class="material-icons">done</i>
+                                        </a>
+                                        <a (click)="clearEditingComment()">
+                                            <i class="material-icons">clear</i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="no-todos" *ngIf="todos && todos.length == 0">
+                            <p>No Todos Found!</p>
+                        </div>
                     </div>
-                    <ul class="comment-list">
-                        <li *ngFor="let comment of comments" [class.completed]="comment.isEdit === true">
-                            <div class="comment-row" *ngIf="!editing || editingComment.commentId != comment.commentId">
-                                <span class="comment-content">{{ comment.content }}</span>
-                                <span class="comment-actions">
-                                    <a (click)="editComment(comment)">
-                                        <i class="material-icons edit">edit</i>
-                                    </a>
-                                    <a (click)="deleteComment(comment.commentId)">
-                                        <i class="material-icons delete">clear</i>
-                                    </a>
-                                </span>
-                            </div>
-                            <div class="comment-edit" *ngIf="editing && editingComment.commentId === comment.commentId">
-                                <input class="form-control" type="text" [(ngModel)]="editingComment.content" required>
-                                <span class="edit-actions">
-                                    <a (click)="updateComment(editingComment)">
-                                        <i class="material-icons">done</i>
-                                    </a>
-                                    <a (click)="clearEditingComment()">
-                                        <i class="material-icons">clear</i>
-                                    </a>
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
