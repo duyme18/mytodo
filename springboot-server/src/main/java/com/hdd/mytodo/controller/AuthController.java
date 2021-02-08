@@ -70,7 +70,8 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Validated @RequestBody SignupRequest signupRequest) {
 
-		if (signupRequest.getUsername().contains("admin") || signupRequest.getUsername().contains("manager") || signupRequest.getUsername().contains("adminstrator")) {
+		if (signupRequest.getUsername().contains("admin") || signupRequest.getUsername().contains("manager")
+				|| signupRequest.getUsername().contains("adminstrator")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Invalid Username!"));
 		}
 
