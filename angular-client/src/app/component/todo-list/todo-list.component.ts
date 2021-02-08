@@ -1,6 +1,6 @@
 import { CommentService } from './../../service/comment.service';
 import { TokenStorageService } from './../../service/token-storage.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Todo } from './../../model/todo';
 import { Comment } from '../../model/comment';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -137,19 +137,18 @@ export class TodoListComponent implements OnInit {
 
   getAllCommentByTodo(id: any): void {
     this.commentService.getAllCommentByTodo(id).subscribe(data => {
-
       this.comments = data;
       this.todoId = id;
       this.getTodo(this.todoId);
     });
   }
 
-  addComment() {
+  addComment(): void {
 
     const { content } = this.commentForm.value;
 
     if (content === '') {
-      return;
+      return void (0);
     }
 
     const comment: any = {

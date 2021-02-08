@@ -12,12 +12,18 @@
     min-height: 100vh;
     transition: all 0.3s;
 }
+
+h6 {
+    padding-top: 10px;
+    font-size: x-small;
+}
+
+
 /* You can add global styles to this file, and also import other style files */
 
 body {
     font-size: 18px;
     line-height: 1.58;
-  
     color: #333;
 }
 
@@ -106,13 +112,15 @@ input {
 .comment-content ul li span {
     display: inline-block;
     vertical-align: middle;
+    padding-left: 20px;
 }
 
-.comment-content .comment-content {
+.comment-content .comment-title {
     width: calc(100% - 160px);
     margin-left: 10px;
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: initial;
 }
 
 .comment-content .comment-completed {
@@ -151,8 +159,14 @@ input {
     background-color: #f4f4f4;
 }
 
+.comment-edit {
+    width: 100%;
+    padding-left: 15px;
+    height: 35px;
+}
+
 .comment-content .comment-edit input {
-    width: calc(100% - 80px);
+    width: calc(100% - 90px);
     height: 35px;
 }
 
@@ -172,7 +186,7 @@ li.completed .toggle-completed-checkbox:before {
     content: "check_box";
 }
 
-li.completed .comment-content {
+li.completed .comment-title {
     text-decoration: line-through;
     color: #757575;
 }
