@@ -85,7 +85,7 @@ export class TodoListComponent implements OnInit {
     const { title } = this.todoForm.value;
 
     if (title === '') {
-      return;
+      return void (0);
     }
     const todo: any = {
       title: title
@@ -99,10 +99,12 @@ export class TodoListComponent implements OnInit {
   }
 
   deleteTodo(id: any): void {
-    this.todoService.deleteTodo(id)
-      .subscribe(() => {
-        this.todos = this.todos.filter(todo => todo?.id != id);
-      });
+    if (window.confirm('Are you sure want to delete this task?')) {
+      this.todoService.deleteTodo(id)
+        .subscribe(() => {
+          this.todos = this.todos.filter(todo => todo?.id != id);
+        });
+    }
   }
 
   updateTodo(todoData: Todo): void {
@@ -199,8 +201,10 @@ export class TodoListComponent implements OnInit {
   }
 
   deleteComment(id: any) {
-    this.commentService.deleteComment(id).subscribe(() => {
-      this.comments = this.comments.filter(comment => comment.commentId != id);
-    });
+    if (window.confirm('Are you sure want to delete this comment?')) {
+      this.commentService.deleteComment(id).subscribe(() => {
+        this.comments = this.comments.filter(comment => comment.commentId != id);
+      });
+    }
   }
 }
