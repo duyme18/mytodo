@@ -39,6 +39,7 @@ export class TodoListComponent implements OnInit {
     id: new FormControl(''),
     content: new FormControl('')
   });
+  srcResult: any;
 
   constructor(
     private commentService: CommentService,
@@ -204,6 +205,20 @@ export class TodoListComponent implements OnInit {
       this.commentService.deleteComment(id).subscribe(() => {
         this.comments = this.comments.filter(comment => comment.commentId != id);
       });
+    }
+  }
+
+  onFileSelected() {
+    const inputNode: any = document.querySelector('#file');
+
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.srcResult = e.target.result;
+      };
+
+      reader.readAsArrayBuffer(inputNode.files[0]);
     }
   }
 }

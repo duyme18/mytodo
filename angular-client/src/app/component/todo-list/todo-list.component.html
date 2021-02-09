@@ -55,7 +55,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -76,13 +77,22 @@
                         </div>
                         <div class="comment-create">
                             <form [formGroup]="commentForm" (ngSubmit)="addComment()" novalidate>
-                                <input type="text" class="form-control" formControlName="content" placeholder="Write a comment...">
-
+                                <input type="text" class="form-control" formControlName="content"
+                                    placeholder="Write a comment...">
                                 <a>
-                                    <i class="material-icons">attachment</i>
+                                    <i class="material-icons"
+                                        style="cursor: pointer;  float: right;">insert_emoticon</i>
+                                </a>
+                                <a>
+                                    <i class="material-icons" style="cursor: pointer;  float: right;">mic</i>
+                                </a>
+                                <a (click)="fileInput.click()">
+                                    <i class="material-icons" style="cursor: pointer;  float: right;"><input hidden
+                                            (change)="onFileSelected()" #fileInput type="file" id="file">attachment</i>
                                 </a>
                             </form>
                         </div>
+                        <br />
                         <ul class="comment-list">
                             <li *ngFor="let comment of comments" [class.completed]="comment.isEdit === true">
                                 <div class="row">
@@ -90,10 +100,11 @@
                                     <b class="text-success">{{ comment.user?.username }}</b> &nbsp;
                                     <h6 class="text-secondary">{{ comment.commentDate }}</h6>
                                 </div>
-                                <div class="comment-row" *ngIf="!editing || editingComment.commentId != comment.commentId">
+                                <div class="comment-row"
+                                    *ngIf="!editing || editingComment.commentId != comment.commentId">
                                     <span class="comment-title">{{ comment.content }}</span>
                                     <span class="comment-actions">
-                                        <a (click)="editComment(comment)" >
+                                        <a (click)="editComment(comment)">
                                             <i class="material-icons edit">edit</i>
                                         </a>
                                         <a (click)="deleteComment(comment.commentId)">
@@ -101,10 +112,12 @@
                                         </a>
                                     </span>
                                 </div>
-                                <div class="comment-edit" *ngIf="editing && editingComment.commentId === comment.commentId">
-                                    <input class="form-control" type="text" [(ngModel)]="editingComment.content" required>
+                                <div class="comment-edit"
+                                    *ngIf="editing && editingComment.commentId === comment.commentId">
+                                    <input class="form-control" type="text" [(ngModel)]="editingComment.content"
+                                        required>
                                     <span class="edit-actions">
-                                        <a (click)="updateComment(editingComment)" >
+                                        <a (click)="updateComment(editingComment)">
                                             <i class="material-icons">done</i>
                                         </a>
                                         <a (click)="clearEditingComment()">
